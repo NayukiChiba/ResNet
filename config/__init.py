@@ -7,6 +7,7 @@ from config.paths import (
     get_model_log_dir,
     get_model_vis_dir,
 )
+from config.training import TrainingParams
 
 __all__ = [
     "get_model_checkpoint_dir",
@@ -16,4 +17,5 @@ __all__ = [
     "get_last_model_path",
     "DataParams",
     "DefaultParams",
+    "TrainingParams",
 ]
