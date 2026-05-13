@@ -1,4 +1,5 @@
-from paths import (
+from config.datasets import DataParams
+from config.paths import (
     get_best_model_path,
     get_last_model_path,
     get_model_checkpoint_dir,
@@ -12,4 +13,5 @@ __all__ = [
     "get_model_log_dir",
     "get_best_model_path",
     "get_last_model_path",
+    "DataParams",
 ]
