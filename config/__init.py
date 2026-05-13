@@ -1,4 +1,5 @@
 from config.datasets import DataParams
+from config.defaults import DefaultParams
 from config.paths import (
     get_best_model_path,
     get_last_model_path,
@@ -14,4 +15,5 @@ __all__ = [
     "get_best_model_path",
     "get_last_model_path",
     "DataParams",
+    "DefaultParams",
 ]
