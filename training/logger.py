@@ -4,9 +4,8 @@
 
 from pathlib import Path
 
-import matplotlib.pyplot as plt
-
 from config.paths import LOGS_DIR
+from evaluation.visualization import plot_training_curves
 
 
 class Logger:
@@ -52,18 +51,5 @@ class Logger:
         )
 
     def plot(self):
-        _, axes = plt.subplots(1, 2, figsize=(12, 4))
-
-        axes[0].plot(self.history["train_loss"], label="train")
-        axes[0].plot(self.history["val_loss"], label="val")
-        axes[0].set_title("Loss")
-        axes[0].legend()
-
-        axes[1].plot(self.history["train_acc"], label="train")
-        axes[1].plot(self.history["val_acc"], label="val")
-        axes[1].set_title("Accuracy")
-        axes[1].legend()
-
-        path = self.save_dir / f"{self.model_name}_curve.png"
-        plt.savefig(path, dpi=150, bbox_inches="tight")
-        plt.show()
+        save_path = self.save_dir / f"{self.model_name}_curve.png"
+        plot_training_curves(self.history, save_path=str(save_path))

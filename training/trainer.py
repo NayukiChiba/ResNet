@@ -6,6 +6,7 @@ from typing import Literal
 
 import torch
 import torch.nn as nn
+from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
@@ -89,7 +90,10 @@ class Trainer:
             self.logger.log(train_loss, train_acc, val_loss, val_acc)
 
             if self.scheduler is not None:
-                self.scheduler.step(val_loss)
+                if isinstance(self.scheduler, ReduceLROnPlateau):
+                    self.scheduler.step(val_loss)
+                else:
+                    self.scheduler.step()
 
             if self.early_stopping is not None and self.early_stopping(val_loss):
                 print(f"早停触发于 epoch {epoch}")
