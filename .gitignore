@@ -373,3 +373,5 @@ tmp/
 temp/
 debug/
 release/
+
+uv.lock
