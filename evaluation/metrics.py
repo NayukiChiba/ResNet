@@ -1,8 +1,7 @@
 """
-评估指标:Top-k 准确率、混淆矩阵、各类别准确率
+评估指标:Top-k 准确率、混淆矩阵、各类别准确率、精确率、召回率
 """
 
-import matplotlib.pyplot as plt
 import numpy as np
 import torch
 
@@ -92,50 +91,3 @@ def per_class_recall(cm: np.ndarray, class_names: list | None = None) -> dict:
     召回率 = TP / (TP + FN),即实际为该类的样本中被正确识别的比例(按行计算)
     """
     return per_class_accuracy(cm, class_names)
-
-
-def plot_confusion_matrix(
-    cm: np.ndarray,
-    class_names: list | None = None,
-    title: str = "Confusion Matrix",
-    save_path: str | None = None,
-):
-    """绘制混淆矩阵(原始计数 + 归一化)
-
-    Args:
-        cm: 混淆矩阵 (num_classes, num_classes)
-        class_names: 类别名称列表,标签过多时自动隐藏
-        title: 图表标题
-        save_path: 保存路径,None 则仅显示不保存
-    """
-    num_classes = cm.shape[0]
-    cm_normalized = cm.astype(np.float64) / (cm.sum(axis=1, keepdims=True) + 1e-8)
-
-    fig, axes = plt.subplots(1, 2, figsize=(20, 8))
-
-    # 原始计数
-    im0 = axes[0].imshow(cm, cmap="Blues")
-    axes[0].set_title(f"{title} - Count", fontsize=14)
-    axes[0].set_xlabel("Predicted")
-    axes[0].set_ylabel("True")
-    plt.colorbar(im0, ax=axes[0])
-
-    # 归一化
-    im1 = axes[1].imshow(cm_normalized, cmap="Blues", vmin=0, vmax=1)
-    axes[1].set_title(f"{title} - Normalized", fontsize=14)
-    axes[1].set_xlabel("Predicted")
-    axes[1].set_ylabel("True")
-    plt.colorbar(im1, ax=axes[1])
-
-    # 类别数过多时不显示标签文字,否则看不清
-    if class_names is not None and num_classes <= 20:
-        for ax in axes:
-            ax.set_xticks(range(num_classes))
-            ax.set_yticks(range(num_classes))
-            ax.set_xticklabels(class_names, rotation=90, fontsize=8)
-            ax.set_yticklabels(class_names, fontsize=8)
-
-    plt.tight_layout()
-    if save_path is not None:
-        plt.savefig(save_path, dpi=150, bbox_inches="tight")
-    plt.show()

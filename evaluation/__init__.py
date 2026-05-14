@@ -4,9 +4,9 @@ from evaluation.metrics import (
     per_class_accuracy,
     per_class_precision,
     per_class_recall,
-    plot_confusion_matrix,
     topk_accuracy,
 )
+from evaluation.visualization import plot_confusion_matrix, plot_training_curves
 
 __all__ = [
     "Evaluator",
@@ -16,4 +16,5 @@ __all__ = [
     "per_class_precision",
     "per_class_recall",
     "plot_confusion_matrix",
+    "plot_training_curves",
 ]
